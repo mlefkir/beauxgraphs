@@ -12,4 +12,5 @@ plt.style.use("https://github.com/mlefkir/beauxgraphs/raw/main/beautifulgraphs_l
 
 To get the list of colors loaded:
 ```python
+plt.rcParams["axes.prop_cycle"].by_key()["color"]
 ```
