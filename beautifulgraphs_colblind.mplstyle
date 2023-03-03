@@ -17,11 +17,11 @@
 ##-                 FONTS                       -
 ##-----------------------------------------------
 
-font.size : 20
-legend.fontsize : 20
-axes.titlesize : 20
-axes.labelsize : 20
-axes.linewidth : 1.25
+font.size : 15
+legend.fontsize : 16
+axes.titlesize : 18
+axes.labelsize : 16
+axes.linewidth : 1.2
 
 ##-----------------------------------------------
 ##-                 AXES                        -
@@ -51,12 +51,12 @@ xtick.bottom:  True
 xtick.major.size: 10
 xtick.minor.size: 5
 xtick.direction: in
-xtick.labelsize : 20
+xtick.labelsize : 15
 xtick.minor.width : 1.5
 xtick.major.width : 1.5
 
 
-ytick.labelsize : 20
+ytick.labelsize : 15
 ytick.left:     True
 ytick.right:    True
 ytick.major.size: 10
