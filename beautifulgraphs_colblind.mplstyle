@@ -1,0 +1,82 @@
+#### MATPLOTLIB STYLE 2021 EDITION
+##
+##
+## Style for plots in report with LaTeX
+##
+
+
+
+##-----------------------------------------------
+##-                 LATEX                       -
+##-----------------------------------------------
+
+#text.usetex: True
+#text.latex.preamble: \usepackage[cm]{sfmath} 
+
+##-----------------------------------------------
+##-                 FONTS                       -
+##-----------------------------------------------
+
+font.size : 20
+legend.fontsize : 20
+axes.titlesize : 20
+axes.labelsize : 20
+axes.linewidth : 1.25
+
+##-----------------------------------------------
+##-                 AXES                        -
+##-----------------------------------------------
+
+
+#axes.prop_cycle: cycler('color', ['665191', '005982', 'f4413e', 'ffa600',  'ff7c43', 'd45087',  '5a464c', '5AD8BF','8c564b','2ca02c','7f7f7f','bcbd22','17becf','9467bd'])
+axes.prop_cycle: cycler('color', ['0077bb','33bbee','009988','ee7733','cc3311','ee3377','4477aa', '66ccee', '228833', 'ccbb44', 'ee6677', 'aa3377'])
+# use the following for colorblind friendly from https://personal.sron.nl/~pault/
+
+
+##-----------------------------------------------
+##-                 GRIDS                       -
+##-----------------------------------------------
+
+grid.color:     7E7E7E  
+grid.linestyle: dashed  
+grid.linewidth: 0.8     
+grid.alpha:     0.4   
+
+##-----------------------------------------------
+##-                 TICKS                       -
+##-----------------------------------------------
+
+xtick.top:     True
+xtick.bottom:  True
+xtick.major.size: 10
+xtick.minor.size: 5
+xtick.direction: in
+xtick.labelsize : 20
+xtick.minor.width : 1.5
+xtick.major.width : 1.5
+
+
+ytick.labelsize : 20
+ytick.left:     True
+ytick.right:    True
+ytick.major.size: 10
+ytick.minor.size: 5
+ytick.direction: in 
+ytick.major.width : 1.5
+ytick.minor.width : 1.5
+
+##-----------------------------------------------
+##-                 LEGEND                      -
+##-----------------------------------------------
+
+legend.frameon:       False
+
+##-----------------------------------------------
+##-                 FIGURES                     -
+##-----------------------------------------------
+
+figure.titleweight : bold
+figure.figsize:     5, 3.5
+##figure.autolayout : True
+
+
