@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "beauxgraphs"
+authors = [
+    {name = "Mehdy Lefkir", email = "mehdylefkir.work@gmail.com"},
+]
+description = "Scripts for graphs"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy","scipy","matplotlib",'corner' ]
+version = "0.1.0"
+
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -67,9 +67,8 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
         q_m, q_p = q_mid - q_lo, q_hi - q_mid
         ax = axes[i, i]
         fmt = "{{0:{0}}}".format(title_fmt).format
-        print(q_mid,q_m,q_p)
         # pretty 
-        if q_mid>1e2 or q_mid<1e-1 :
+        if abs(q_mid)>1e2 or abs(q_mid)<1e-2 :
             s = np.sign(np.log10(abs(q_mid)))
             idx = (int(abs(np.log10(abs(q_mid)))+1))*int(s)
             q_mid_trunc = q_mid *10**(-idx)
@@ -77,7 +76,7 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
             q_p_trunc = q_p *10**(-idx)
             title = r"${{{0}}}_{{-{1}}}^{{+{2}}}\times 10^{{{3}}}$"
             title = title.format(fmt(q_mid_trunc), fmt(q_m_trunc), fmt(q_p_trunc),idx)
-
+            print(title)
             if scale_with_sci :
                 if i==0 : # first column and last row
                      # set sci notation on x axis of the corresponding variable
@@ -85,11 +84,11 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
                     axes[ndim-1,i].ticklabel_format(style='sci', axis='x', scilimits=(0,0))
                     figure.canvas.draw() # necessary to access the text values...
                     offset_x = axes[ndim-1,i].get_xaxis().get_offset_text().get_text()
-                    if '1e' in offset_x:
+                    if '1e' in offset_x :
                         offset_x = offset_x.replace("1e",r"\times 10^{")+'}'
-                    plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
-                    oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
-                    axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
+                        plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
+                        oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
+                        axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
 
 
                 elif i<ndim-1:
@@ -103,19 +102,21 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
                     offset_y = axes[i,0].get_yaxis().get_offset_text().get_text()
                     offset_x = axes[ndim-1,i].get_xaxis().get_offset_text().get_text()
                     if '1e' in offset_x:
+                        print(offset_x)
+
                         offset_x = offset_x.replace("1e",r"\times 10^{")+'}'
                         offset_y = offset_y.replace("1e",r"\times 10^{")+'}'
 
-                    # hide the offsets 
-                    plt.setp(axes[i,0].get_yaxis().get_offset_text(), visible=False)
-                    plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
-                    # get the original labels
-                    oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
-                    oldlabel_y = axes[i,0].get_yaxis().label.get_text()
-                    # append the offsets to the labels
-                    axes[i,0].set_ylabel(oldlabel_y+r'  $\left('+offset_y.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
-                    axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
-                
+                        # hide the offsets 
+                        plt.setp(axes[i,0].get_yaxis().get_offset_text(), visible=False)
+                        plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
+                        # get the original labels
+                        oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
+                        oldlabel_y = axes[i,0].get_yaxis().label.get_text()
+                        # append the offsets to the labels
+                        axes[i,0].set_ylabel(oldlabel_y+r'  $\left('+offset_y.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
+                        axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
+                    
 
         else:
             title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
@@ -126,7 +127,7 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
     #---------------other datasets-------------
     
     for nda in range(1,n_datasets):
-        corner.corner(dataset[nda], fig=figure,labels=labels,quantiles=quantiles_corn,color=colors[nda],
+        corner.corner(dataset[nda], fig=figure,truths=truths,truth_color=truth_color,labels=labels,quantiles=quantiles_corn,color=colors[nda],
                       labelpad=label_padding,hist_kwargs=dict(density=True,alpha=0.5,histtype="stepfilled",
                       ec="k"),fill_contours=False,no_fill_contours=True)
 
@@ -140,7 +141,7 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
             ax = axes[i, i]
             fmt = "{{0:{0}}}".format(title_fmt).format
 
-            if q_mid>1e2 or q_mid<1e-1 :
+            if abs(q_mid)>1e2 or abs(q_mid)<1e-2:
                 s = np.sign(np.log10(abs(q_mid)))
                 idx = (int(abs(np.log10(abs(q_mid)))+1))*int(s)
                 q_mid_trunc = q_mid *10**(-idx)
@@ -157,10 +158,12 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
                         figure.canvas.draw() # necessary to access the text values...
                         offset_x = axes[ndim-1,i].get_xaxis().get_offset_text().get_text()
                         if '1e' in offset_x:
+                            print(offset_x)
+
                             offset_x = offset_x.replace("1e",r"\times 10^{")+'}'
-                        plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
-                        oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
-                        axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
+                            plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
+                            oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
+                            axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
 
                         
                     elif i<ndim-1:
@@ -174,18 +177,22 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
                         offset_y = axes[i,0].get_yaxis().get_offset_text().get_text()
                         offset_x = axes[ndim-1,i].get_xaxis().get_offset_text().get_text()
                         if '1e' in offset_y:
+                            print(offset_x)
+
                             offset_x = offset_x.replace("1e",r"\times 10^{")+'}'
                             offset_y = offset_y.replace("1e",r"\times 10^{")+'}'
 
-                        # hide the offsets 
-                        plt.setp(axes[i,0].get_yaxis().get_offset_text(), visible=False)
-                        plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
-                        # get the original labels
-                        oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
-                        oldlabel_y = axes[i,0].get_yaxis().label.get_text()
-                        # append the offsets to the labels
-                        axes[i,0].set_ylabel(oldlabel_y+r'  $\left('+offset_y.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
-                        axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
+                            # hide the offsets 
+                            plt.setp(axes[i,0].get_yaxis().get_offset_text(), visible=False)
+                            plt.setp(axes[ndim-1,i].get_xaxis().get_offset_text(), visible=False)
+                            # get the original labels
+                            oldlabel_x = axes[ndim-1,i].get_xaxis().label.get_text()
+                            print(oldlabel_x)
+                            oldlabel_y = axes[i,0].get_yaxis().label.get_text()
+                            print(oldlabel_y)
+                            # append the offsets to the labels
+                            axes[i,0].set_ylabel(oldlabel_y+r'  $\left('+offset_y.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
+                            axes[ndim-1,i].set_xlabel(oldlabel_x+r'  $\left('+offset_x.replace("$","").replace("\\mathdefault{}","").replace("\\mathdefault","").replace("−","-")+r'\right)$')
                 
 
             else:
@@ -195,7 +202,7 @@ def cornerdatasets(dataset,filename,labels,colors,name_datasets,truths=None,trut
             ax.text(0.5,loc,t, ha='center', va='top',fontsize=14, transform=ax.transAxes,color=colors[nda])
 
     if ncol is None : 
-        ncol = len(colors)
+        ncol = int(len(colors)/2)+1
     legend_elements = [Patch(facecolor=colors[nda], alpha=0.5,edgecolor=colors[nda], label=name_datasets[nda]) for nda in range(len(colors))]
     if truths is not None:
         legend_elements.append(Line2D([0], [0], color=truth_color, lw=2, label='Truth'))
